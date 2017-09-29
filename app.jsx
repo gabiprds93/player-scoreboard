@@ -16,40 +16,61 @@ let PLAYERS = [
   },
 ];
 
-const Header = ({players}) => {
-  return(
+const Header = ({ players }) => {
+  return (
     <div className="header">
-      <Scoreboard players={players}/>
-      <Timer />
+      <Stats players={players} />
+      <Stopwatch />
     </div>
   )
 }
 
-const Scoreboard = ({players}) => {
-  return(
-    <div>
-      <p>Players: {players.length}</p>
-      <p>Total Points: {players[0].score + players[1].score + players[2].score}</p>
-    </div>
+function suma(players)
+{
+  let suma = 0;
+  for(let i in players)
+  {
+    suma += players[i].score;
+  }
+  return suma;
+}
+
+const Stats = ({ players }) => {
+  return (
+    <table className="stats">
+      <tr>
+        <td>Players:</td>
+        <td>{players.length}</td>
+      </tr>
+      <tr>
+        <td>Total Points:</td>
+        <td>{suma(players)}</td>
+      </tr>
+    </table>
   )
 }
 
-const Timer = () => {
-  return(
-    <div>
-      <p>Stopwatch</p>
-      <p>0</p>
-      <p><button>Start</button> <button>Reset</button></p>
+const Stopwatch = () => {
+  return (
+    <div className="stopwatch">
+      <h2>Stopwatch</h2>
+      <h1 className="stopwatch-time">0</h1>
+      <button>Start</button><button>Reset</button>
     </div>
   )
 }
-const PlayerList = ({players}) => {
+const PlayerList = ({ players }) => {
   const list = players.map((item, index) => {
-    return(
-      <p>{item.name}<button>-</button>{item.score}<button>+</button></p>
+    return (
+      <div className="player">
+        <label className="player-name">{item.name}</label>
+        <div className="player-score counter">
+          <button className="counter-action decrement">-</button><label className="counter-score">{item.score}</label><button className="counter-action increment">+</button>
+        </div>
+      </div>
     );
   });
-  return(
+  return (
     <div>
       {list}
     </div>
@@ -57,24 +78,26 @@ const PlayerList = ({players}) => {
 }
 
 const PlayerForm = () => {
-  return(
-    <div>
+  return (
+    <div className="add-player-form">
+    <form>
       <input type="text" placeholder="Enter a Name"/>
-      <button>Add Player</button>
+      <input type="submit" value ="Add Player"/>
+    </form>
     </div>
   )
 }
 
-const Application = ({title, players}) => {
-   return(
+const Application = ({ title, players }) => {
+  return (
     <div>
       <h1>{title}</h1>
-      <Header players={players}/>
-      <PlayerList players={players}/>
+      <Header players={players} />
+      <PlayerList players={players} />
       <PlayerForm />
     </div>
-   ) ;
+  );
 }
 
-ReactDOM.render(<Application title="Scoreboard" 
-players = {PLAYERS}/>, document.getElementById('container'));
+ReactDOM.render(<Application title="Scoreboard"
+  players={PLAYERS} />, document.getElementById('container'));
