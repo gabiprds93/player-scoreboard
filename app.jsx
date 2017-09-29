@@ -38,14 +38,16 @@ function suma(players)
 const Stats = ({ players }) => {
   return (
     <table className="stats">
-      <tr>
-        <td>Players:</td>
-        <td>{players.length}</td>
-      </tr>
-      <tr>
-        <td>Total Points:</td>
-        <td>{suma(players)}</td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>Players:</td>
+          <td>{players.length}</td>
+        </tr>
+        <tr>
+          <td>Total Points:</td>
+          <td>{suma(players)}</td>
+        </tr>
+      </tbody>
     </table>
   )
 }
@@ -62,7 +64,7 @@ const Stopwatch = () => {
 const PlayerList = ({ players }) => {
   const list = players.map((item, index) => {
     return (
-      <div className="player">
+      <div key={item.id} className="player">
         <label className="player-name">{item.name}</label>
         <div className="player-score counter">
           <button className="counter-action decrement">-</button><label className="counter-score">{item.score}</label><button className="counter-action increment">+</button>
